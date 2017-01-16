@@ -33,6 +33,8 @@ Step 4: restart the container and run the classifier
 docker start tensor_classifier
 docker attach tensor_classifier
 
+cd /root
+
 python label_dir.py
 ```
 
