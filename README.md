@@ -31,15 +31,15 @@ cloned_directory
 
 Step 1: Start classifier container
 ```sh
-docker run -ti --name tensor_classifier -v $(pwd)/tf_files/toScan:/toScan/ -v \
+my-pc$ docker run -ti --name tensor_classifier -v $(pwd)/tf_files/toScan:/toScan/ -v \
   $(pwd)/tf_files/scanned:/scanned/ -v $(pwd)/tf_files/new_pics:/new_pics/ \
   gcr.io/tensorflow/tensorflow:latest-devel
 ```
 
 Step 2: inside the container, launch retrain script
 ```sh
-cd /tensorflow
-python tensorflow/examples/image_retraining/retrain.py --bottleneck_dir=/ \
+$ cd /tensorflow
+$ python tensorflow/examples/image_retraining/retrain.py --bottleneck_dir=/ \
   tf_files/bottlenecks --how_many_training_steps 500 --model_dir /tf_files/ \
   inception --output_graph=/tf_files/retrained_graph.pb \
   --output_labels=/tf_files/retrained_labels.txt \
@@ -48,20 +48,19 @@ python tensorflow/examples/image_retraining/retrain.py --bottleneck_dir=/ \
 
 Step 3: after complete retrain, copy label_dir script in the container
 ```sh
-exit
-
-docker cp label_dir.py tensor_classifier:/root
+$ exit
+my-pc$ docker cp label_dir.py tensor_classifier:/root
 ```
 
 Step 4: restart the container and run the classifier
 ```sh
-docker start tensor_classifier
-docker attach tensor_classifier
+my-pc $ docker start tensor_classifier
+my-pc $ docker attach tensor_classifier
 ```
 
 Step 5: run the classifier asking the script to put under `scanned` only a particular class you may be interested to.
 ```sh
-python label_dir.py <interesting_class>
+$ python label_dir.py <interesting_class>
 ```
 
 This will create a copy of each file located in `toScan` to `scanned` renaming it to: `<classname>--<score>`, e.g. `darthvader--58334.jpg` means that the picture matches the "darthvader" class with a 58% score.
