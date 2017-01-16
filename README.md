@@ -30,7 +30,6 @@ cloned_directory
 ## Steps
 
 Step 1: Start classifier container
-
 ```sh
 docker run -ti --name tensor_classifier -v $(pwd)/tf_files/toScan:/toScan/ -v \
   $(pwd)/tf_files/scanned:/scanned/ -v $(pwd)/tf_files/new_pics:/new_pics/ \
@@ -38,7 +37,6 @@ docker run -ti --name tensor_classifier -v $(pwd)/tf_files/toScan:/toScan/ -v \
 ```
 
 Step 2: inside the container, launch retrain script
-
 ```sh
 cd /tensorflow
 python tensorflow/examples/image_retraining/retrain.py --bottleneck_dir=/ \
@@ -48,9 +46,7 @@ python tensorflow/examples/image_retraining/retrain.py --bottleneck_dir=/ \
   --image_dir /new_pics
 ```
 
-
 Step 3: after complete retrain, copy label_dir script in the container
-
 ```sh
 exit
 
@@ -73,4 +69,4 @@ This will create a copy of each file located in `toScan` to `scanned` renaming i
 The `interesting_class` parameter is mandatory but if you want that the script will copy to `scanned` all the input images with its score just modify a couple of python lines in the script.
 
 ## Results
-I'm still doing tests on different classes so no results yet. Please share any interesting result you get.
+I'm still experimenting with different classes and pictures combinations, so no results yet. Please share any interesting experience you make.
