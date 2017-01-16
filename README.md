@@ -54,8 +54,8 @@ my-pc$ docker cp label_dir.py tensor_classifier:/root
 
 Step 4: restart the container and run the classifier
 ```sh
-my-pc $ docker start tensor_classifier
-my-pc $ docker attach tensor_classifier
+my-pc$ docker start tensor_classifier
+my-pc$ docker attach tensor_classifier
 ```
 
 Step 5: run the classifier asking the script to put under `scanned` only a particular class you may be interested to.
