@@ -4,6 +4,9 @@ import sys
 # change this as you see fit
 #image_path = sys.argv[1]
 
+interesting_class = sys.argv[1]
+print("Interesting class: ", interesting_class)
+
 # Read in the image_data
 #image_data = tf.gfile.FastGFile(image_path, 'rb').read()
 import os
@@ -36,7 +39,12 @@ with tf.Session() as sess:
     #    None
     #mkdir ('scanned')
  
+    file_count = len(imgFiles)
+    i = 0
+
     for imageFile in imgFiles:
+        print("File ", i, " of ",  file_count)
+        i = i+1
         image_data =  tf.gfile.FastGFile(varPath+"/"+imageFile, 'rb').read()       
 
         print (varPath+"/"+imageFile)
@@ -48,8 +56,10 @@ with tf.Session() as sess:
         firstElt = top_k[0];
 
         newFileName = label_lines[firstElt] +"--"+ str(predictions[0][firstElt])[2:7]+".jpg"
-        print(newFileName)
-        copyfile(varPath+"/"+imageFile, destDir+"/"+newFileName)
+        print(interesting_class, label_lines[firstElt])
+        if interesting_class == label_lines[firstElt]:
+            print(newFileName)
+            copyfile(varPath+"/"+imageFile, destDir+"/"+newFileName)
 
         for node_id in top_k:
             human_string = label_lines[node_id]
